@@ -80,6 +80,23 @@ public class Grafo
 		return contador;
 	}
 	
+	// Retorna el conjunto de vecinos de un vértice
+	public ArrayList<Integer> getVecinos(int i)
+	{
+		// Código defensivo (mmm, copiaste y pegaste!)
+		if( i < 0 || i >= getVertices())
+			throw new IllegalArgumentException("Se intentó consultar los vecinos de un vértice inexistente! i = " + i);
+		
+		ArrayList<Integer> vecinos = new ArrayList<Integer>();
+		for(int j=0; j<getVertices(); ++j) if( j != i )
+		{
+			if( existeArista(i, j) )
+				vecinos.add(j);
+		}
+		
+		return vecinos;			
+	}
+	
 	// Cantidad de vértices del grafo
 	public int getVertices()
 	{
@@ -100,8 +117,8 @@ public class Grafo
 		rueda.agregarArista(3, 5);
 		rueda.agregarArista(4, 5);
 
-		for(int i=0; i<=rueda.getVertices(); ++i)
-			System.out.println("d(" + i + ") = " + rueda.getGrado(i));
+		for(Integer v: rueda.getVecinos(6))
+			System.out.println(v);
 	}
 }
 
