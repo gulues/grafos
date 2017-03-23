@@ -37,19 +37,6 @@ public class Grafo
 		return _adj[i][j];
 	}
 
-	// Verifica que los vértices puedan corresponder a una arista
-	private void chequearArista(int i, int j, String accion)
-	{
-		if( i < 0 || i >= getVertices() )
-			throw new IllegalArgumentException("Se intentó " + accion + " una arista con un vértice inexistente! i = " + i);
-		
-		if( j < 0 || j >= getVertices() )
-			throw new IllegalArgumentException("Se intentó " + accion + " una arista con un vértice inexistente! j = " + i);
-		
-		if( i == j )
-			throw new IllegalArgumentException("Se intentó " + accion + " una arista con dos vertices iguales! i, j = " + i);
-	}
-
 	// El nuevo vértice tiene rótulo n, si antes había n vértices
 	public void agregarVertice()
 	{
@@ -66,26 +53,14 @@ public class Grafo
 	// Retorna el grado (cantidad de vecinos) del vértice i
 	public int getGrado(int i)
 	{
-		// Código defensivo
-		if( i < 0 || i >= getVertices())
-			throw new IllegalArgumentException("Se intentó consultar el grado de un vértice inexistente! i = " + i);
-		
-		int contador = 0;
-		for(int j=0; j<getVertices(); ++j) if( j != i )
-		{
-			if( existeArista(i, j) ) // O(1)
-				++contador;
-		}
-		
-		return contador;
+		chequearVertice(i, "el grado");
+		return getVecinos(i).size();
 	}
 	
 	// Retorna el conjunto de vecinos de un vértice
 	public ArrayList<Integer> getVecinos(int i)
 	{
-		// Código defensivo (mmm, copiaste y pegaste!)
-		if( i < 0 || i >= getVertices())
-			throw new IllegalArgumentException("Se intentó consultar los vecinos de un vértice inexistente! i = " + i);
+		chequearVertice(i, "los vecinos");
 		
 		ArrayList<Integer> vecinos = new ArrayList<Integer>();
 		for(int j=0; j<getVertices(); ++j) if( j != i )
@@ -96,13 +71,33 @@ public class Grafo
 		
 		return vecinos;			
 	}
-	
+
 	// Cantidad de vértices del grafo
 	public int getVertices()
 	{
 		return _adj.length;
 	}	
-	
+
+	// Verifica que un índice corresponda a un vértice válido
+	private void chequearVertice(int i, String consulta)
+	{
+		if( i < 0 || i >= getVertices())
+			throw new IllegalArgumentException("Se intentó consultar " + consulta + " de un vértice inexistente! i = " + i);
+	}
+
+	// Verifica que los vértices puedan corresponder a una arista
+	private void chequearArista(int i, int j, String accion)
+	{
+		if( i < 0 || i >= getVertices() )
+			throw new IllegalArgumentException("Se intentó " + accion + " una arista con un vértice inexistente! i = " + i);
+		
+		if( j < 0 || j >= getVertices() )
+			throw new IllegalArgumentException("Se intentó " + accion + " una arista con un vértice inexistente! j = " + i);
+		
+		if( i == j )
+			throw new IllegalArgumentException("Se intentó " + accion + " una arista con dos vertices iguales! i, j = " + i);
+	}
+
 	public static void main(String[] args)
 	{
 		Grafo rueda = new Grafo(6);
