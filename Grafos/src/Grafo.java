@@ -19,6 +19,15 @@ public class Grafo
 		_adj[j][i] = true;
 	}
 	
+	// Como es un método para eliminar una arista?
+	public void eliminarArista(int i, int j)
+	{
+		chequearArista(i, j, "eliminar");
+		
+		_adj[i][j] = false;
+		_adj[j][i] = false;
+	}
+	
 	// Responde si existe una arista
 	public boolean existeArista(int i, int j)
 	{
@@ -38,6 +47,19 @@ public class Grafo
 		if( i == j )
 			throw new IllegalArgumentException("Se intentó " + accion + " una arista con dos vertices iguales! i, j = " + i);
 	}
+
+	// El nuevo vértice tiene rótulo n, si antes había n vértices
+	public void agregarVertice()
+	{
+		int n = _adj.length;
+		boolean[][] nueva = new boolean[n+1][n+1];
+		
+		for(int i=0; i<n; ++i)
+		for(int j=0; j<n; ++j)
+			nueva[i][j] = _adj[i][j];
+		
+		_adj = nueva;
+	}
 	
 	public static void main(String[] args)
 	{
@@ -45,3 +67,9 @@ public class Grafo
 		g.existeArista(-1, 120); // Esto explota
 	}
 }
+
+
+
+
+
+
