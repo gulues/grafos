@@ -16,7 +16,7 @@ public class Grafo
 	public void agregarArista(int i, int j)
 	{
 		chequearArista(i, j, "agregar");
-
+		
 		_adj[i][j] = true;
 		_adj[j][i] = true;
 	}
@@ -92,7 +92,7 @@ public class Grafo
 			throw new IllegalArgumentException("Se intentó " + accion + " una arista con un vértice inexistente! i = " + i);
 		
 		if( j < 0 || j >= getVertices() )
-			throw new IllegalArgumentException("Se intentó " + accion + " una arista con un vértice inexistente! j = " + i);
+			throw new IllegalArgumentException("Se intentó " + accion + " una arista con un vértice inexistente! j = " + j);
 		
 		if( i == j )
 			throw new IllegalArgumentException("Se intentó " + accion + " una arista con dos vertices iguales! i, j = " + i);
@@ -112,7 +112,7 @@ public class Grafo
 		rueda.agregarArista(3, 5);
 		rueda.agregarArista(4, 5);
 
-		for(Integer v: rueda.getVecinos(6))
+		for(Integer v: rueda.getVecinos(5))
 			System.out.println(v);
 	}
 }
