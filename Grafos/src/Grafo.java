@@ -1,14 +1,19 @@
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Grafo
 {
-	// Representamos el grafo por medio de su matriz de adyacencia
-	private boolean[][] _adj;
+	// Representamos el grafo por medio de listas de vecinos
+	private ArrayList<HashSet<Integer>> _vecinos;
 
 	// El grafo se construye sin aristas
 	public Grafo(int verticesIniciales)
 	{
-		_adj = new boolean[verticesIniciales][verticesIniciales];
+		_vecinos = new ArrayList<HashSet<Integer>>();
+		
+		for(int i=0; i<verticesIniciales; ++i)
+			_vecinos.add(new HashSet<Integer>());
 	}
 	
 	// Agregar una arista
@@ -16,8 +21,8 @@ public class Grafo
 	{
 		chequearArista(i, j, "agregar");
 		
-		_adj[i][j] = true;
-		_adj[j][i] = true;
+		_vecinos.get(i).add(j);
+		_vecinos.get(j).add(i);
 	}
 	
 	// Como es un método para eliminar una arista?
@@ -25,56 +30,41 @@ public class Grafo
 	{
 		chequearArista(i, j, "eliminar");
 		
-		_adj[i][j] = false;
-		_adj[j][i] = false;
+		_vecinos.get(i).remove(j);
+		_vecinos.get(j).remove(i);
 	}
 	
 	// Responde si existe una arista
 	public boolean existeArista(int i, int j)
 	{
 		chequearArista(i, j, "consultar");
-		return _adj[i][j];
+		return _vecinos.get(i).contains(j);
 	}
 
 	// El nuevo vértice tiene rótulo n, si antes había n vértices
 	public void agregarVertice()
 	{
-		int n = getVertices();
-		boolean[][] nueva = new boolean[n+1][n+1];
-		
-		for(int i=0; i<n; ++i)
-		for(int j=0; j<n; ++j)
-			nueva[i][j] = _adj[i][j];
-		
-		_adj = nueva;
+		_vecinos.add(new HashSet<Integer>());
 	}
 
 	// Retorna el grado (cantidad de vecinos) del vértice i
 	public int getGrado(int i)
 	{
 		chequearVertice(i, "el grado");
-		return getVecinos(i).size();
+		return _vecinos.get(i).size();
 	}
 	
 	// Retorna el conjunto de vecinos de un vértice
-	public ArrayList<Integer> getVecinos(int i)
+	public Set<Integer> getVecinos(int i)
 	{
 		chequearVertice(i, "los vecinos");
-		
-		ArrayList<Integer> vecinos = new ArrayList<Integer>();
-		for(int j=0; j<getVertices(); ++j) if( j != i )
-		{
-			if( existeArista(i, j) )
-				vecinos.add(j);
-		}
-		
-		return vecinos;			
+		return _vecinos.get(i);
 	}
 
 	// Cantidad de vértices del grafo
 	public int getVertices()
 	{
-		return _adj.length;
+		return _vecinos.size();
 	}	
 
 	// Verifica que un índice corresponda a un vértice válido
@@ -96,28 +86,4 @@ public class Grafo
 		if( i == j )
 			throw new IllegalArgumentException("Se intentó " + accion + " una arista con dos vertices iguales! i, j = " + i);
 	}
-
-	public static void main(String[] args)
-	{
-		Grafo rueda = new Grafo(6);
-		rueda.agregarArista(0, 1);
-		rueda.agregarArista(1, 2);
-		rueda.agregarArista(2, 3);
-		rueda.agregarArista(3, 4);
-		rueda.agregarArista(4, 0);
-		rueda.agregarArista(0, 5);
-		rueda.agregarArista(1, 5);
-		rueda.agregarArista(2, 5);
-		rueda.agregarArista(3, 5);
-		rueda.agregarArista(4, 5);
-
-		for(Integer v: rueda.getVecinos(5))
-			System.out.println(v);
-	}
 }
-
-
-
-
-
-

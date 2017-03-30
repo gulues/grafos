@@ -1,6 +1,6 @@
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
+import java.util.Set;
 import org.junit.Test;
 
 public class GrafoTest
@@ -111,7 +111,7 @@ public class GrafoTest
 	public void vecinosUniversalTest()
 	{
 		Grafo rueda = construirRueda();
-		ArrayList<Integer> vecinos = rueda.getVecinos(5);
+		Set<Integer> vecinos = rueda.getVecinos(5);
 		Assert.coinciden(vecinos, new int[] {0, 1, 2, 3, 4});
 	}
 	
@@ -119,7 +119,7 @@ public class GrafoTest
 	public void vecinosRegularTest()
 	{
 		Grafo rueda = construirRueda();
-		ArrayList<Integer> vecinos = rueda.getVecinos(3);
+		Set<Integer> vecinos = rueda.getVecinos(3);
 		Assert.coinciden(vecinos, new int[] {2, 4, 5});
 	}
 	
@@ -127,7 +127,7 @@ public class GrafoTest
 	public void aisladoTest()
 	{
 		Grafo grafo = new Grafo(3);
-		ArrayList<Integer> vecinos = grafo.getVecinos(1);
+		Set<Integer> vecinos = grafo.getVecinos(1);
 		Assert.coinciden(vecinos, new int[] {});
 	}
 	
