@@ -1,5 +1,7 @@
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -107,6 +109,22 @@ public class GrafoTest
 		rueda.getGrado(6);		
 	}
 	
+	@Test
+	public void vecinosUniversalTest()
+	{
+		Grafo rueda = construirRueda();
+		ArrayList<Integer> vecinos = rueda.getVecinos(5);
+		assertCoinciden(vecinos, new int[] {0, 1, 2, 3, 4});
+	}
+	
+	@Test
+	public void vecinosRegularTest()
+	{
+		Grafo rueda = construirRueda();
+		ArrayList<Integer> vecinos = rueda.getVecinos(3);
+		assertCoinciden(vecinos, new int[] {2, 4, 5});
+	}
+	
 	private Grafo construirRueda()
 	{
 		Grafo rueda = new Grafo(6);
@@ -123,6 +141,15 @@ public class GrafoTest
 		
 		return rueda;		
 	}
+	
+	// Chequea que "valores" y "target" sean iguales como conjuntos
+	private void assertCoinciden(ArrayList<Integer> valores, int[] target)
+	{
+		assertEquals(target.length, valores.size());
+		
+		for(Integer valor: target)
+			assertTrue(valores.contains(valor));		
+	}	
 }
 
 
