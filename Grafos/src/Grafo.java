@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 
-
 public class Grafo
 {
 	// Representamos el grafo por medio de su matriz de adyacencia
