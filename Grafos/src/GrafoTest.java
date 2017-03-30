@@ -1,5 +1,6 @@
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class GrafoTest
@@ -82,7 +83,49 @@ public class GrafoTest
 		Grafo grafo = new Grafo(4);
 		grafo.eliminarArista(3, -1);
 	}
+
+	@Test
+	public void gradoTest()
+	{
+		Grafo rueda = construirRueda();
+		
+		assertEquals(5, rueda.getGrado(5));
+		assertEquals(3, rueda.getGrado(0));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void gradoInvalidoTest()
+	{
+		Grafo rueda = construirRueda();
+		rueda.getGrado(-1);		
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void gradoExcedidoTest()
+	{
+		Grafo rueda = construirRueda();
+		rueda.getGrado(6);		
+	}
+	
+	private Grafo construirRueda()
+	{
+		Grafo rueda = new Grafo(6);
+		rueda.agregarArista(0, 1);
+		rueda.agregarArista(1, 2);
+		rueda.agregarArista(2, 3);
+		rueda.agregarArista(3, 4);
+		rueda.agregarArista(4, 0);
+		rueda.agregarArista(0, 5);
+		rueda.agregarArista(1, 5);
+		rueda.agregarArista(2, 5);
+		rueda.agregarArista(3, 5);
+		rueda.agregarArista(4, 5);
+		
+		return rueda;		
+	}
 }
+
+
 
 
 
