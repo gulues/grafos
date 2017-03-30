@@ -1,8 +1,6 @@
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-
-import org.junit.Before;
 import org.junit.Test;
 
 public class GrafoTest
@@ -114,7 +112,7 @@ public class GrafoTest
 	{
 		Grafo rueda = construirRueda();
 		ArrayList<Integer> vecinos = rueda.getVecinos(5);
-		assertCoinciden(vecinos, new int[] {0, 1, 2, 3, 4});
+		Assert.coinciden(vecinos, new int[] {0, 1, 2, 3, 4});
 	}
 	
 	@Test
@@ -122,7 +120,29 @@ public class GrafoTest
 	{
 		Grafo rueda = construirRueda();
 		ArrayList<Integer> vecinos = rueda.getVecinos(3);
-		assertCoinciden(vecinos, new int[] {2, 4, 5});
+		Assert.coinciden(vecinos, new int[] {2, 4, 5});
+	}
+	
+	@Test
+	public void aisladoTest()
+	{
+		Grafo grafo = new Grafo(3);
+		ArrayList<Integer> vecinos = grafo.getVecinos(1);
+		Assert.coinciden(vecinos, new int[] {});
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void vecinosExcedidoTest()
+	{
+		Grafo grafo = new Grafo(3);
+		grafo.getVecinos(3);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void vecinosNegativoTest()
+	{
+		Grafo grafo = new Grafo(3);
+		grafo.getVecinos(-1);
 	}
 	
 	private Grafo construirRueda()
@@ -141,15 +161,6 @@ public class GrafoTest
 		
 		return rueda;		
 	}
-	
-	// Chequea que "valores" y "target" sean iguales como conjuntos
-	private void assertCoinciden(ArrayList<Integer> valores, int[] target)
-	{
-		assertEquals(target.length, valores.size());
-		
-		for(Integer valor: target)
-			assertTrue(valores.contains(valor));		
-	}	
 }
 
 
