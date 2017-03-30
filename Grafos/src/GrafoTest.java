@@ -68,6 +68,20 @@ public class GrafoTest
 		grafo.eliminarArista(1, 2);
 		assertFalse( grafo.existeArista(2, 1) );
 	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void eliminarExcedidoTest()
+	{
+		Grafo grafo = new Grafo(4);
+		grafo.eliminarArista(0, 4);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void eliminarNegativoTest()
+	{
+		Grafo grafo = new Grafo(4);
+		grafo.eliminarArista(3, -1);
+	}
 }
 
 
